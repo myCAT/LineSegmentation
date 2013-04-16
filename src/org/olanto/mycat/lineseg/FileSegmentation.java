@@ -1,23 +1,24 @@
-/**********
-    Copyright © 2010-2012 Olanto Foundation Geneva
-
-   This file is part of myCAT.
-
-   myCAT is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of
-    the License, or (at your option) any later version.
-
-    myCAT is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with myCAT.  If not, see <http://www.gnu.org/licenses/>.
-
-**********/
-
+/**
+ * ********
+ * Copyright © 2010-2012 Olanto Foundation Geneva
+ *
+ * This file is part of myCAT.
+ *
+ * myCAT is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * myCAT is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with myCAT. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *********
+ */
 package org.olanto.mycat.lineseg;
 
 import com.ibm.icu.text.BreakIterator;
@@ -36,7 +37,8 @@ import java.util.List;
 import java.util.Vector;
 import org.olanto.senseos.SenseOS;
 
-/** pour segmenter un fichier txt en phrases.
+/**
+ * pour segmenter un fichier txt en phrases.
  */
 public class FileSegmentation {
 
@@ -44,15 +46,18 @@ public class FileSegmentation {
     static BreakIterator boundary;
     static List<String> abreviation = new Vector<String>();
     static String language;
+    static SetOfReplacements replace;
 
     public static void init(String _language) {
-        //String language = "RUSSIAN";
+        if (replace == null) {
+            replace = new SetOfReplacements(SegmentationConstant.FILE_REPLACE);
+        }
         if (_language.equals("???")) {
             System.out.println("default=EN");
             _language = "ENGLISH";
         }
         language = _language;
-        String dictionnary = SenseOS.getMYCAT_HOME()+"/config/dict";
+        String dictionnary = SenseOS.getMYCAT_HOME() + "/config/dict";
         readAbreviation(dictionnary + "/" + language + ".txt");
         if (_language.equals("FRENCH")) {
             boundary = BreakIterator.getSentenceInstance(ULocale.FRENCH);
@@ -76,15 +81,16 @@ public class FileSegmentation {
             boundary = BreakIterator.getSentenceInstance(new ULocale("pt"));
         }
     }
-    
-    public static long getLastModified(String path){
-        long lastModified=(new File(path)).lastModified();
+
+    public static long getLastModified(String path) {
+        long lastModified = (new File(path)).lastModified();
         return lastModified;
     }
-   public static void setLastModified(String path,long lastModified){
+
+    public static void setLastModified(String path, long lastModified) {
         (new File(path)).setLastModified(lastModified);
     }
-    
+
     public static List<String> readFile(String path, String inputEncoding, boolean autodetect) {
         List<String> res = new Vector<String>();
         try {
@@ -189,52 +195,35 @@ public class FileSegmentation {
         s = s.replace("\t", " ");
         char x20 = 0x20;
         char xa0 = 0xa0;
-//        System.out.println("nbsp");
-        while (s.contains("" + xa0 + x20)) {
+//        System.out.println("nbsp")
 //            System.out.println("nbsp:" + s);
-            s = s.replace("" + xa0 + x20, " ");
-        }
+        s = s.replace("" + xa0 + x20, " ");
 //        System.out.println("1e");
         char x1e = 0x1e;
-        while (s.contains("" + x1e)) {
-            s = s.replace("" + x1e, " ");
-        }
+        s = s.replace("" + x1e, " ");
 //        System.out.println("1f");
         char x1f = 0x1f;
-        while (s.contains("" + x1f)) {
-            s = s.replace("" + x1f, "");
-        }
+        s = s.replace("" + x1f, "");
 //         System.out.println("02");
         char x02 = 0x02;
-        while (s.contains("" + x02)) {
-            s = s.replace("" + x02, " ");
-        }
-//          System.out.println("3");
+        s = s.replace("" + x02, " ");
+//          System.out.println("13");
         char x13 = 0x13;
-        while (s.contains("" + x13)) {
-            s = s.replace("" + x13, " ");
-        }
+        s = s.replace("" + x13, " ");
 //          System.out.println("15");
         char x15 = 0x15;
-        while (s.contains("" + x15)) {
-            s = s.replace("" + x15, " ");
-        }
+        s = s.replace("" + x15, " ");
 //          System.out.println("00");
         char x00 = 0x00;
-        while (s.contains("" + x00)) {
-            s = s.replace("" + x00, " ");
-        }
+        s = s.replace("" + x00, " ");
 //          System.out.println("0b");
         char x0b = 0x0b;
-        while (s.contains("" + x0b)) {
-            s = s.replace("" + x0b, " ");
-        }
+        s = s.replace("" + x0b, " ");
 //          System.out.println("0c");
         char x0c = 0x0c;
-        while (s.contains("" + x0c)) {
-            s = s.replace("" + x0c, " ");
-        }
+        s = s.replace("" + x0c, " ");
 //          System.out.println("double blanc");
+        s = replace.replaceAll(s); // replace from list
         s = s.replace("  ", " ");
 //            System.out.println("return");
         return s.trim();

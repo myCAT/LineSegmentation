@@ -30,7 +30,7 @@ public class testSeg {
 
     public static void main(String[] args) {
         FileSegmentation.init("ENGLISH");
-        List<String> seg = FileSegmentation.readFile(SenseOS.getMYCAT_HOME()+"/corpus/source/BY_EXT/Bodies$2010$CEP$CEP PLEN$MEETING$CEP PLEN 2010.1$Doc 16$src$cep_plen-1_d016_ad00_an03_p00_r00.doc.txt", "UTF-16", true);
+        List<String> seg = FileSegmentation.readFile(SenseOS.getMYCAT_HOME()+"/corpus/source/small-collection/WIPO/PLT/plt_ce_v_5_FR.doc.txt", "UTF-8", true);
         for (String s : seg) {
             System.out.println(s);
         }

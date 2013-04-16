@@ -47,6 +47,7 @@ public class SegmentationConstant {//extends org.olanto.idxvli.IdxConstant {
     public static String FOLDER_EXTRA_SOURCE = SenseOS.getMYCAT_HOME() + "/corpus/source/BY_EXT";
     public static FileMode FILE_ORGANISATION = FileMode.BY_EXT;
     public static String FILE_EXT = ".txt";
+    public static String FILE_REPLACE = SenseOS.getMYCAT_HOME() + "/config/ReplaceChar.txt";
     public static String SEPARATOR = "¦";
     public static String GLOSSARIES = "NO";
     public static String GLOSS_LANG = "XX";
@@ -68,6 +69,7 @@ public class SegmentationConstant {//extends org.olanto.idxvli.IdxConstant {
                 + "\n    FOLDER_EXTRA_SOURCE: " + FOLDER_EXTRA_SOURCE
                 + "\n    FILE_ORGANISATION: " + FILE_ORGANISATION
                 + "\n    FILE_EXT: " + FILE_EXT
+                + "\n    FILE_REPLACE: " + FILE_REPLACE
                 + "\n    SEPARATOR: " + SEPARATOR
                 + "\n    GLOSSARIES: " + GLOSSARIES
                 + "\n    GLOSS_LANG: " + GLOSS_LANG
