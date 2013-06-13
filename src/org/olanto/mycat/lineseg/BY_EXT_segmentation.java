@@ -71,8 +71,9 @@ public class BY_EXT_segmentation {
 
     public static void indexdoc(String f, String name) {
         if (f.contains(SEPARATOR)) {
-            System.err.println("FATAL ERROR filename contains SEPARATOR:" + f);
-            System.exit(0);
+           System.out.println("ERROR  filename contains SEPARATOR (skip this):" + f);
+          //  System.exit(0);
+            return;
         }
         String flatPath = f.substring(sourceRoot.length() + 1, f.length() - name.length());
         flatPath = flatPath.replace("/", SEPARATOR);

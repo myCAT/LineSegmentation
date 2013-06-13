@@ -86,8 +86,9 @@ public class BY_EXT_glossaries {
 /** multi extension */
      private static void indexdocNExt(String f, String name, String EXT) {
         if (f.contains(SEPARATOR)) {
-            System.err.println("FATAL ERROR filename contains SEPARATOR:" + f);
-            System.exit(0);
+           System.out.println("ERROR  filename contains SEPARATOR (skip this):" + f);
+          //  System.exit(0);
+            return;
         }
         String flatPath = f.substring(sourceRoot.length() + 1, f.length() - name.length());
         flatPath = flatPath.replace("/", SEPARATOR);
@@ -122,8 +123,9 @@ public class BY_EXT_glossaries {
     /** mono extension */
     private static void indexdoc1Ext(String f, String name, String EXT) {
         if (f.contains(SEPARATOR)) {
-            System.err.println("FATAL ERROR filename contains SEPARATOR:" + f);
-            System.exit(0);
+            System.out.println("ERROR  filename contains SEPARATOR (skip this):" + f);
+          //  System.exit(0);
+            return;
         }
         String flatPath = f.substring(sourceRoot.length() + 1, f.length() - name.length());
         flatPath = flatPath.replace("/", SEPARATOR);
